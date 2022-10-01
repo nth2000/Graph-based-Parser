@@ -70,7 +70,7 @@ class biaffineparser(nn.Module):
         embed_word = self.embedding(sentence)
         embed_pos = self.embedding(pos)
         input = torch.cat((embed_word,embed_pos),dim = -1)
-        input = pack_padded_sequence(input,length,True,False)
+        input = pack_padded_sequence(input,length.to('cpu'),True,False)
 
         R,_ = self.LSTM(input)
         R_,length = pad_packed_sequence(R,True)
