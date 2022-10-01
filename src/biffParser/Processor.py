@@ -66,7 +66,7 @@ class Processor(object):
             optimizer.zero_grad()
             total_loss = torch.tensor([0]).float()
             for sentence,pos,dependent in training_data:
-                score = torch.tensor([0]).float()
+                score = torch.tensor([0]).float().to(self.device)
                 sentence_ = self.to_tensor(sentence).to(self.device) #转变为tensor后的sentence_
                 pos_ = self.to_tensor(pos).to(self.device)   #转变为tensor后的pos_
                 dependent_ = self.to_tensor(dependent).to(self.device)
