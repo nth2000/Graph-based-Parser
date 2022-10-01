@@ -76,8 +76,8 @@ class Processor(object):
                 S_arc,pred_head = model(sentence_,pos_,length)  #前向传播
                 loss_  = loss(S_arc,dependent_)
                 for i in range(len(loss_)):
-                    a = torch.sum(loss_[i][1:length[i]])
-                    b = (length[i] - 1).float()
+                    a = torch.sum(loss_[i][1:length[i]]).to(self.device)
+                    b = (length[i] - 1).float().to(self.device)
                     score += a/b
                     training_correct += (pred_head[i,1:length[i]] == dependent_[i,1:length[i]]).sum()
                     total_length += length[i] - 1  #去除root结点
