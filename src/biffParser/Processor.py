@@ -67,12 +67,12 @@ class Processor(object):
             total_loss = torch.tensor([0]).float()
             for sentence,pos,dependent in training_data:
                 score = torch.tensor([0]).float()
-                sentence_ = self.to_tensor(sentence) #转变为tensor后的sentence_
-                pos_ = self.to_tensor(pos)   #转变为tensor后的pos_
-                dependent_ = self.to_tensor(dependent)
+                sentence_ = self.to_tensor(sentence).to(self.device) #转变为tensor后的sentence_
+                pos_ = self.to_tensor(pos).to(self.device)   #转变为tensor后的pos_
+                dependent_ = self.to_tensor(dependent).to(self.device)
                 assert dependent_[0][0]==-1
                 dependent_[:,:1]=0
-                length = torch.LongTensor([len(x) for x in sentence]).to(self.device) #真实长度
+                length = torch.tensor([len(x) for x in sentence]).to(self.device) #真实长度
                 S_arc,pred_head = model(sentence_,pos_,length)  #前向传播
                 loss_  = loss(S_arc,dependent_)
                 for i in range(len(loss_)):
