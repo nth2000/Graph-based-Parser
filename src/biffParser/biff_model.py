@@ -2,6 +2,10 @@ import torch.nn as nn
 import torch.functional as F
 import torch
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
 class ReLUMLP(nn.Module):
     def __init__(self,input_size:int,output_size:int,dropout:float):
         super().__init__()
@@ -80,7 +84,7 @@ class biaffineparser(nn.Module):
 
         max_len = max(length)
         S_arc = torch.bmm(torch.bmm(H_arc_head,U_),H_arc_dep.transpose(1,2))
-        mask = torch.zeros(size = (bsz,max_len,max_len))
+        mask = torch.zeros(size = (bsz,max_len,max_len)).to(device)
 
         for id,l in enumerate(length):
             mask[id,l:,:]=1
