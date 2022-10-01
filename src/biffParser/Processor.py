@@ -9,8 +9,9 @@ import logging
 import time
 logging.basicConfig(level = logging.INFO,format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 torch.autograd.set_detect_anomaly(True)
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
 
 
 
