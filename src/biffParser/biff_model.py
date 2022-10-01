@@ -83,7 +83,7 @@ class biaffineparser(nn.Module):
         # S_arc = torch.bmm(torch.bmm(H_arc_head,U_),H_arc_dep.transpose(1,2)) +  H_arc_head @ self.u_2
 
         max_len = max(length)
-        S_arc = torch.bmm(torch.bmm(H_arc_head,U_),H_arc_dep.transpose(1,2))
+        S_arc = torch.bmm(torch.bmm(H_arc_head,U_),H_arc_dep.transpose(1,2)).to(device)
         mask = torch.zeros(size = (bsz,max_len,max_len)).to(device)
 
         for id,l in enumerate(length):
